@@ -1,0 +1,49 @@
+Name: Tanuj Dave, netId: tdave6
+
+*********************************************************
+ourvector<5State> stats:
+ # of vectors created:   1
+ # of elements inserted: 50
+ # of elements accessed: 1353
+*********************************************************
+*********************************************************
+ourvector<i> stats:
+ # of vectors created:   1
+ # of elements inserted: 54
+ # of elements accessed: 90
+*********************************************************
+
+commands given:
+first, load
+second, search Illinois
+third, stats
+fourth, plot
+fifth, winnable democrats
+
+
+For ourvector<States>:
+    Number of vectors created: 1, This was created in line 374 inside main to
+                               store all the states as struct objects.
+        
+    Number of elements inserted: 50, this is the number of states in the file
+                                 and added to the vector. 
+                                 
+    Number of elemets accessed: 1353, for storing the data loaded from voters file
+                                I used a linear search function (binary search and selection
+                                sort increased accesses) to search for the states. Thus it
+                                took 1325 accesses for searching states to store eligible
+                                voters and 28 accesses more to search for Illinois since it
+                                is at 28th position.
+        
+    
+For ourvector<int>:
+    Number of vectors created: 1, only one state was searched (Illinois). This would be the 
+                               number of states searched for using search command. Line 373
+        
+    Number of elements inserted: 54, since Illinois has 18 districts, and each state requires 
+                                 3 elements (percentage of democratic votes, democratic votes,
+                                 and republican votes), thus 18*3 = 54.
+        
+    Number of elemets accessed: 90, since for each district, 'stats' function has 2 accesses,
+                                'plot' has 1 access, and winnable has 2 accesses, thus 5
+                                accesses total for each district, 18*5 = 90.

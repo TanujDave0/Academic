@@ -1,0 +1,7 @@
+Big O for:
+    1. generateText is O(N) as there are 3 for loops, none of which are nested loops. 
+       2 inside the function and one inside randomKey function call in the begining. 
+       Thus, N/2 + 2N + 5N which leads to O(N).
+    
+    2. buildMap is O(N) as there are 3 loops, none of which are nested loops.
+       All of them are inside the function. Thus, 3N-3 + 4N-4 + 3N-3 gives O(N).
