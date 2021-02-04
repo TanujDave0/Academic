@@ -1,0 +1,84 @@
+First 5 Rows 
+                     a                     b
+0        Chelsea Rider             Joe Rogan
+1          Katy DeLeon  Predictive Analytics
+2  Computational Legal        Andrew Bridges
+3       Leigh Cressman  Predictive Analytics
+4      Jacques de Vrij     James D. Williams
+
+number of edges = 30519
+number of nodes = 29210
+
+10 nodes with highest degree
+Predictive Analytics    16753
+Computational Legal      7096
+Chelsea Rider            2607
+Legal Tracker            1847
+James D. Williams        1696
+Strathclyde U IT Law      429
+Johnny Halftime            57
+Biyu Hua                   29
+Sue Ellen Soussloff        13
+NaN                         5
+dtype: int64
+
+ the names and centrality values of the 10 most central nodes in the network
+Predictive Analytics    0.573556
+Computational Legal     0.242939
+Chelsea Rider           0.089253
+Legal Tracker           0.063234
+James D. Williams       0.058064
+Strathclyde U IT Law    0.014687
+Johnny Halftime         0.001951
+Biyu Hua                0.000993
+Sue Ellen Soussloff     0.000445
+NaN                     0.000171
+dtype: float64
+
+ degree_centrality_of_James = nx.degree_centrality(g)['James'] 
+number of edges in cored graph = 480
+number of nodes in cored graph = 161
+
+ 
+ 
+ Second Analysis 
+First 5 Rows   0  1
+0  0  2
+1  0  3
+2  0  4
+3  0  5
+4  0  6
+
+number of edges = 88233
+number of nodes = 4039
+ 
+10 nodes with highest degree
+107     1045
+1684     792
+1912     755
+3437     547
+0        346
+2543     294
+2347     291
+1888     254
+1800     245
+1663     235
+dtype: int64
+
+ the names and centrality values of the 10 most central nodes in the network
+107     0.258791
+1684    0.196137
+1912    0.186974
+3437    0.135463
+0       0.085686
+2543    0.072808
+2347    0.072065
+1888    0.062902
+1800    0.060674
+1663    0.058197
+dtype: float64
+
+ number of edges in cored graph = 87951
+number of nodes in cored graph = 3856
+
+ The 3 cored graph for second analysis is "Facebook-combined data" is really messy and has a lot of nodes, also takes about 30secs to display. Also has some dense areas which are further linked. But if we core it to 100, it has around 180 nodes

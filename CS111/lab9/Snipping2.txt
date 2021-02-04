@@ -1,0 +1,6 @@
+Black box or flight data recorder, 
+mounted in the tail of an aircraft, is 
+one of the most important gadgets that is used to 
+reconstruct the events leading to a plane crash. 
+The term "Black Box", however, is a misnomer as 
+its colour is orange. This is done for easier location after a crash.
