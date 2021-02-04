@@ -1,0 +1,18 @@
+c 4 5 Anna
+c 8 8 Alice
+a 7 8 Bob
+a 2 2 Rick
+r 4 4 
+r 5 3
+l Bob
+t Bob
+a 4 6 Jon
+w Anna
+a 1 1 Jenny
+d
+r 3 3
+r 6 6
+w Alice
+r 8 8
+d
+q
