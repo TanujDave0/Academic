@@ -1,0 +1,213 @@
+"Model","Drive_Wheels_Available","HP","Overall_MPG","Weight_LBS","Weight_Category","Lowest_MSRP"
+"Acura ILX","Front",201,28,3095,"Medium Weight",30000
+"Acura MDX","Front, AWD",321,21,4200,"Medium Weight",44300
+"Acura RDX","Front, AWD",272,22,4005,"Medium Weight",37600
+"Acura RLX","Front, AWD",310,23,3930,"Medium Weight",54900
+"Acura TLX","Front, AWD",206,26,3480,"Medium Weight",33000
+"Alfa Romeo Giulia","Rear, AWD",280,27,3695,"Medium Weight",38295
+"Alfa Romeo Stelvio","Rear, AWD",280,24,4020,"Medium Weight",40295
+"Audi A3","Front, AWD",184,27,3135,"Medium Weight",33300
+"Audi A4","Front, AWD",188,27,3630,"Medium Weight",39200
+"Audi A5","AWD",248,27,3550,"Medium Weight",44200
+"Audi A6","AWD",335,25,4265,"Medium Weight",58900
+"Audi A7","AWD",335,25,4235,"Medium Weight",68000
+"Audi A8","AWD",335,21,4810,"Medium Weight",83800
+"Audi Q3","AWD",228,22,3905,"Medium Weight",34700
+"Audi Q5","AWD",248,24,4140,"Medium Weight",42950
+"Audi Q7","AWD",248,20,5080,"Heavy Weight",53550
+"Audi Q8","AWD",335,19,5000,"Medium Weight",67400
+"Audi TT","AWD",228,26,3160,"Medium Weight",44900
+"BMW 2 Series","Rear, AWD",248,25,3450,"Medium Weight",35300
+"BMW 3 Series","Rear, AWD",255,29,3640,"Medium Weight",40250
+"BMW 4 Series","Rear, AWD",248,27,3470,"Medium Weight",44600
+"BMW 5 Series","Rear, AWD",248,26,3950,"Medium Weight",53400
+"BMW 6 Series","Rear, AWD",315,20,4355,"Medium Weight",70300
+"BMW 7 Series","Rear, AWD",322,21,4710,"Medium Weight",83650
+"BMW X1","Front, AWD",228,26,3725,"Medium Weight",34950
+"BMW X2","Front, AWD",228,25,3645,"Medium Weight",36400
+"BMW X3","Rear, AWD",248,24,4220,"Medium Weight",41000
+"BMW X4","AWD",248,25,4145,"Medium Weight",50450
+"BMW X5","Rear, AWD",335,23,4740,"Medium Weight",60700
+"BMW X6","Rear, AWD",300,20,4750,"Medium Weight",63550
+"BMW X7","AWD",335,22,5285,"Heavy Weight",73900
+"BMW Z4","Rear",255,29,3290,"Medium Weight",49700
+"Buick Enclave","Front, AWD",310,18,4690,"Medium Weight",40000
+"Buick Encore","Front, AWD",138,23,3355,"Medium Weight",23200
+"Buick Envision","Front, AWD",252,21,4050,"Medium Weight",31995
+"Buick Regal","Front, AWD",250,23,3680,"Medium Weight",25070
+"Cadillac CT6","Rear, AWD",237,22,4040,"Medium Weight",50495
+"Cadillac Escalade","Rear, AWD",420,16,5820,"Heavy Weight",75195
+"Cadillac XT4","Front, AWD",237,23,3930,"Medium Weight",34795
+"Cadillac XT5","Front, AWD",230,20,4300,"Medium Weight",41695
+"Cadillac XT6","Front, AWD",310,20,4645,"Medium Weight",52695
+"Cadillac XTS","Front, AWD",304,22,4090,"Medium Weight",46795
+"Chevrolet Blazer","Front, AWD",193,19,4235,"Medium Weight",28800
+"Chevrolet Camaro","Rear",275,20,3730,"Medium Weight",25000
+"Chevrolet Corvette","Rear",455,20,3470,"Medium Weight",55900
+"Chevrolet Equinox","Front, AWD",170,31,3540,"Medium Weight",23800
+"Chevrolet Impala","Front",197,22,3855,"Medium Weight",28020
+"Chevrolet Malibu","Front",160,32,3125,"Medium Weight",22095
+"Chevrolet Sonic","Front",138,28,2765,"Light Weight",15420
+"Chevrolet Spark","Front",98,33,2280,"Light Weight",13220
+"Chevrolet Suburban","Rear, AWD",355,16,5945,"Heavy Weight",49700
+"Chevrolet Tahoe","Rear, AWD",355,16,5635,"Heavy Weight",46800
+"Chevrolet Traverse","Front, AWD",310,20,4695,"Medium Weight",29800
+"Chevrolet Trax","Front, AWD",138,25,3255,"Medium Weight",21300
+"Chrysler 300","Rear, AWD",292,21,4095,"Medium Weight",29220
+"Chrysler Pacifica","Front",248,24,4535,"Medium Weight",26995
+"Dodge Challenger","Rear, AWD",305,20,4190,"Medium Weight",27845
+"Dodge Charger","Rear, AWD",292,21,4335,"Medium Weight",29220
+"Dodge Durango","Rear, AWD",293,18,5105,"Heavy Weight",30195
+"Fiat 124","Rear",160,31,2450,"Light Weight",25190
+"Fiat 500","Front",111,28,2565,"Light Weight",33300
+"Fiat 500L","Front",160,27,3330,"Medium Weight",21910
+"Fiat 500x","AWD",177,23,3280,"Medium Weight",24490
+"Ford EcoSport","Front, AWD",123,24,3390,"Medium Weight",20485
+"Ford Edge","Front, AWD",250,22,4250,"Medium Weight",29995
+"Ford Escape","Front, AWD",250,24,3465,"Medium Weight",24885
+"Ford Expedition","Rear, AWD",375,16,6035,"Heavy Weight",48530
+"Ford Explorer","Rear, AWD",325,23,4345,"Medium Weight",28155
+"Ford Fusion","Front, AWD",181,25,3505,"Medium Weight",22840
+"Ford Mustang","Rear",310,22,3845,"Medium Weight",26670
+"Genesis G70","Rear, AWD",252,23,3770,"Medium Weight",34900
+"Genesis G80","Rear, AWD",365,20,4530,"Medium Weight",42050
+"Genesis G90","Rear, AWD",365,18,4820,"Medium Weight",69350
+"GMC Acadia","Front, AWD",193,19,4395,"Medium Weight",29000
+"GMC Terrain","Front, AWD",170,22,3800,"Medium Weight",25000
+"GMC Yukon","Rear, AWD, 4WD",355,16,5635,"Heavy Weight",49600
+"GMC Yuk XL","Rear, AWD, 4WD",355,16,5945,"Heavy Weight",52400
+"Honda Accord","Front",192,36,3155,"Medium Weight",23720
+"Honda Civic","Front",174,32.5,2745,"Light Weight",19450
+"Honda Clarity","Front",161,39,4045,"Medium Weight",33400
+"Honda CR-V","Front, AWD",190,27.5,3450,"Medium Weight",24350
+"Honda Fit","Front",128,33,2625,"Light Weight",16190
+"Honda HR-V","Front, AWD",141,29,3045,"Medium Weight",20520
+"Honda Insight","Front",151,54,2975,"Light Weight",22930
+"Honda Odyssey","Front",280,22,4490,"Medium Weight",30190
+"Honda Passport","Front, AWD",280,21,4170,"Medium Weight",31990
+"Honda Pilot","Front, AWD",280,20,4280,"Medium Weight",31450
+"Honda Accent","Front",130,33,2625,"Light Weight",14995
+"Hyundai Elantra","Front",128,33,2865,"Light Weight",18950
+"Hyundai Ioniq","Front",118,52,3070,"Medium Weight",30200
+"Hyundai Kona","Front, AWD",75,27.5,3145,"Medium Weight",19990
+"Hyundai Palisade","Front, AWD",291,21,4385,"Medium Weight",31550
+"Hyundai Santa Fe","Front, AWD",235,21,4015,"Medium Weight",25750
+"Hyundai Sonata","Front",180,33,3247,"Medium Weight",23300
+"Hyundai Tucson","Front, AWD",164,23,3520,"Medium Weight",23200
+"Hyundai Veloster","Front",201,29,2795,"Light Weight",18500
+"Infinity Q50","Rear, AWD",208,22,3875,"Medium Weight",35650
+"Infinity Q70","Rear, AWD",330,21,3895,"Medium Weight",50400
+"Infinity QX30","Front, AWD",208,25,3540,"Medium Weight",30250
+"Infinity QX50","Front, AWD",268,22,4155,"Medium Weight",36650
+"Infinity QX60","Front, AWD",295,19,4530,"Medium Weight",44350
+"Infinity QX80","Rear, AWD",400,15,5990,"Heavy Weight",65500
+"Jaguar E-Pace","AWD",246,21,4130,"Medium Weight",38900
+"Jaguar F-Pace","AWD",180,20,4350,"Medium Weight",44800
+"Jeep Cherokee","Front, AWD, 4WD",270,23,4070,"Medium Weight",24795
+"Jeep Compass","Front, AWD, 4WD",180,24,3525,"Medium Weight",21845
+"Jeep Grand Cherokee","Rear, 4WD",240,21,4900,"Medium Weight",31945
+"Jeep Renegade","Front, AWD",177,24,3360,"Medium Weight",22025
+"Jeep Wrangler","4WD",270,18,4440,"Medium Weight",28045
+"Kia Cadenza","Front",290,24,3725,"Medium Weight",33100
+"Kia Forte","Front",147,34,2805,"Light Weight",17790
+"Kia K900","4WD",365,21,4735,"Medium Weight",59900
+"Kia Niro","Front",201,43,3155,"Medium Weight",38500
+"Kia Optima","Front",178,28,3300,"Medium Weight",22990
+"Kia Rio","Front",130,33,2575,"Light Weight",15390
+"Kia Sedona","Front",276,20,4595,"Medium Weight",27200
+"Kia Sorento","Front, AWD",185,22,4285,"Medium Weight",26290
+"Kia Sportage","Front, AWD",240,23,3485,"Medium Weight",23990
+"Kia Stinger","Rear, AWD",255,23,3910,"Medium Weight",32990
+"Kia Telluride","Front, AWD",291,21,4300,"Medium Weight",31690
+"Land Rover Discovery","AWD",254,17,5405,"Heavy Weight",52950
+"Land Rover Discovery Sport","AWD",246,21,4325,"Medium Weight",37990
+"Land Rover Range Rover","4WD",254,17,5300,"Heavy Weight",89500
+"Land Rover Range Rover Evoque","AWD",246,23,3935,"Medium Weight",42650
+"Land Rover Range Rover Sport","4WD",398,18,5255,"Heavy Weight",68650
+"Land Rover Range Rover Velar","AWD",180,21,4350,"Medium Weight",49950
+"Lexus ES","Front",215,25,3770,"Medium Weight",39750
+"Lexus GS","Rear, AWD",241,21,3845,"Medium Weight",46860
+"Lexus GX","4WD",301,17,5170,"Heavy Weight",52500
+"Lexus IS","Rear, AWD",241,20,3850,"Medium Weight",38560
+"Lexus US","Rear, AWD",354,20,5170,"Heavy Weight",75450
+"Lexus UX","Front, AWD",169,37,3570,"Medium Weight",32150
+"Lincoln Aviator","Rear, AWD",400,20,4900,"Medium Weight",51100
+"Lincoln Continental","Front, AWD",335,20,4540,"Medium Weight",46145
+"Lincoln Corsair","Front, AWD",250,21,3691,"Medium Weight",35495
+"Lincoln MKZ","Front, AWD",188,40,3755,"Medium Weight",35995
+"Lincoln Nautilus","Front, AWD",245,18,4560,"Medium Weight",40340
+"Lincoln Navigator","Rear, AWD",411,16,6100,"Heavy Weight",73205
+"Maserati Ghibli","Rear, AWD",345,19,4625,"Medium Weight",74980
+"Maserati Levante","AWD",345,16,4905,"Medium Weight",75980
+"Mazda 3","Front, AWD",345,30,3025,"Medium Weight",21000
+"Mazda 6","Front",186,28,3405,"Medium Weight",23800
+"Mazda CX-3","Front, AWD",187,28,2945,"Light Weight",20390
+"Mazda CX-5","Front, AWD",250,24,3590,"Medium Weight",24350
+"Mazda CX-9","Front, AWD",227,32,4585,"Medium Weight",32280
+"Mazda Mx-5 Miata","Rear",181,34,2335,"Light Weight",25730
+"Mercedes-Benz A Class","Front, AWD",188,28,3425,"Medium Weight",32500
+"Mercedes-Benz C Class","Rear, AWD",255,26,3670,"Medium Weight",41400
+"Mercedes-Benz CLA","Front, AWD",221,27,3335,"Medium Weight",33100
+"Mercedes-Benz CLS","Rear, AWD",362,26,4255,"Medium Weight",69200
+"Mercedes-Benz E-Class","Rear, AWD",255,24,4030,"Medium Weight",53500
+"Mercedes-Benz GLA","Front, AWD",208,26,3535,"Medium Weight",33950
+"Mercedes-Benz GLC","Rear, AWD",241,22,4010,"Medium Weight",40700
+"Mercedes-Benz GLE","Rear, AWD",255,20,5150,"Heavy Weight",53700
+"Mercedes-Benz GLS","AWD",362,18,5660,"Heavy Weight",75200
+"Mercedes-Benz S-Class","Rear, AWD",362,18,4935,"Medium Weight",91250
+"Mini Cooper","Front",134,30,2775,"Light Weight",21900
+"Mini Cooper Clubman","Front, AWD",134,28,3175,"Medium Weight",24900
+"Mini Cooper Countryman","Front, AWD",134,25,3690,"Medium Weight",26900
+"Mitsubishi Eclipse Cross","Front, AWD",152,24,3515,"Medium Weight",23595
+"Mitsubishi Mirage","Front",78,37,2085,"Light Weight",13795
+"Mitsubishi Outlander","Front, AWD",197,24,3610,"Medium Weight",24695
+"Mitsubishi Outlander Sport","Front, AWD",148,26,3290,"Medium Weight",20945
+"Nissan Altima","Front, AWD",248,31,3240,"Medium Weight",24000
+"Nissan Armada","Rear, 4WD",390,14,5910,"Heavy Weight",47100
+"Nissan Kicks","Front",125,32,2630,"Light Weight",18640
+"Nissan Maxima","Front",300,25,3535,"Medium Weight",34050
+"Nissan Murano","Front, AWD",260,21,4025,"Medium Weight",31370
+"Nissan Pathfinder","Front, AWD",284,18,4505,"Medium Weight",31530
+"Nissan Rogue","Front, AWD",170,24,3590,"Medium Weight",25020
+"Nissan Rogue Sport","Front, AWD",141,26,3365,"Medium Weight",22340
+"Nissan Sentra","Front",188,31,2865,"Light Weight",17890
+"Nissan Versa","Front",122,34,2494,"Light Weight",14730
+"Nissan Z","Rear",322,23,3385,"Medium Weight",34040
+"Porsche 718 Boxster","Rear",300,26,3150,"Medium Weight",59000
+"Porsche 718 Cayman","Rear",300,24,3055,"Medium Weight",56900
+"Porsche 911","Rear, AWD",443,23,3380,"Medium Weight",113000
+"Porsche Cayenne","AWD",434,21,4680,"Medium Weight",65700
+"Porsche Macan","AWD",248,19,4410,"Medium Weight",49900
+"Porsche Panamera","Rear, AWD",440,23,4125,"Medium Weight",86300
+"Subaru Accent","AWD",260,22,4550,"Medium Weight",31995
+"Subaru BRZ","Rear",200,30,2770,"Light Weight",25795
+"Subaru Crosstrek","AWD",148,29,3190,"Medium Weight",21895
+"Subaru Forester","AWD",182,28,3485,"Medium Weight",24295
+"Subaru Impreza","AWD",152,30,2085,"Light Weight",18595
+"Subaru Legacy","AWD",260,31,3499,"Medium Weight",24000
+"Subaru Outback","AWD",260,29,3634,"Medium Weight",26000
+"Subaru WRX","AWD",268,26,3320,"Medium Weight",27195
+"Toyota 4Runner","Rear, AWD",270,18,4665,"Medium Weight",35310
+"Toyota 86","Rear",205,30,2770,"Light Weight",26655
+"Toyota Avalon","Front",215,42,3680,"Medium Weight",35650
+"Toyota Camry","Front",203,32,3340,"Medium Weight",24095
+"Toyota C-HR","Front",144,39,3290,"Medium Weight",21145
+"Toyota Corolla","Front",121,32,2960,"Light Weight",19500
+"Toyota Highlander","Front, AWD",240,22,4134,"Medium Weight",32000
+"Toyota RAV4","Front, AWD",203,30,3510,"Medium Weight",25650
+"Toyota Sequoia","Rear, AWD",381,15,6025,"Heavy Weight",49050
+"Toyota Sienna","Front, AWD",296,21,4550,"Medium Weight",31415
+"Toyota Supra","Rear",335,26,3400,"Medium Weight",49990
+"Toyota Yaris","Front",106,35,2420,"Light Weight",15600
+"Volkswagen Arteon","Front, AWD",268,23,3850,"Medium Weight",35845
+"Volkswagen Atlas","Front, AWD",235,20,4670,"Medium Weight",30895
+"Volkswagen Golf Alltrack","AWD",168,25,3465,"Medium Weight",26895
+"Volkswagen GT1","Front",228,29,3155,"Medium Weight",27595
+"Volkswagen Jetta","Front",147,34,3065,"Medium Weight",18745
+"Volkswagen Passat","Front",174,28,3320,"Medium Weight",25295
+"Volkswagen Tiguan","Front, AWD",184,25,3860,"Medium Weight",24295
+"Volvo S60","Front, AWD",250,26,3740,"Medium Weight",35800
+"Volvo S90","Front, AWD",250,23,4085,"Medium Weight",47350
+"Volvo XC40","Front, AWD",187,24,3785,"Medium Weight",33700
+"Volvo XC60","Front, AWD",250,23,4150,"Medium Weight",39800
+"Volvo XC90","Front, AWD",250,20,4595,"Medium Weight",47700

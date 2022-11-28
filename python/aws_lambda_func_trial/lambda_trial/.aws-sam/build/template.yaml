@@ -1,0 +1,44 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: 'trial
+
+  Sample SAM Template for trial
+
+  '
+Globals:
+  Function:
+    Timeout: 3
+Resources:
+  myown:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: myown
+      Handler: app.lambda_handler
+      Runtime: python3.9
+      Architectures:
+      - x86_64
+      Events:
+        myown:
+          Type: Api
+          Properties:
+            Path: /my_own
+            Method: get
+    Metadata:
+      SamResourceId: myown
+Outputs:
+  myownApi:
+    Description: API Gateway endpoint URL for Prod stage for my own function
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/my_own/
+  myown:
+    Description: my own Lambda Function ARN
+    Value:
+      Fn::GetAtt:
+      - myown
+      - Arn
+  myownIamRole:
+    Description: Implicit IAM Role created for my own
+    Value:
+      Fn::GetAtt:
+      - myown
+      - Arn

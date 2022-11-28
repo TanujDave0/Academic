@@ -1,0 +1,634 @@
+CS 441 HW3
+
+Tanuj Dave
+
+The main folder for this hw is the ./HW3/hw3 folder. It contains all the scala code, tests
+and diagrams as well as the findings.
+
+In this hw, I have explored several scheduling policies, VM allocation policies, Autoscaling
+and datacenter scheduling intervals and have included my findings below.
+
+The hw3 package contains 3 files, all of them have similar code except the actual usage and
+simulation done by them, all of them have their own Parameter<number> file in the helperutils
+and their own configuration inside the application.config file.
+
+hw3_simple -- Parameters1 -- application.config homework3_1 (explores a simple datacenter)
+hw3_Random_Allocation -- Parameters2 -- application.config homework3_2 (explores random vm assignment and other scheduling policies)
+hw3_Round_Robin -- Parameters3 -- application.config homework3_3 (explores round robin assignment and other scheduling policies)
+
+*The Architecture.jpeg*
+
+In the diagrams folder goes over the cloud organization.
+The organization has multiple datacenters and an implicit broker that handles
+the requests assignment to the datacenters.
+
+Further each datacenter has its own allocation/assignment policy that handles
+these requests and chooses a right host for the task. In the 3 files discussed
+above, it can be a Random Assignment, Round Robin Assignment or First available host.
+
+In turn each host communicates back via the channel to the client about the
+task completion/progress.
+
+The Broker is the entity which handles the cloudlets and VMs. Thus, it has a
+cloudlet scheduler for each VM, and communicates with the other parts of the
+organization to process the cloudlets request.
+
+*Host Architecture.jpeg*
+
+In the diagram we have a host inside the datacenter with multiple PEs and RAM
+and an internet connection. It maintains a list of VM that are running and currently
+using the resources hosted, also a list of VMs waiting to be processed. The allocation
+of PEs, RAM, and bandwidth is done by the VM Scheduler, and it can have different policies,
+TimeShared or SpaceShared, TimeShared allows VMs to share resources and Space shared assigns
+VMs resources and disables sharing, creates a queue of VMs to be processed. The VM scheduler
+also works on behalf of the host to allocate and de-allocate the resources, enabling
+scaling of the VMs as explored in the simulations.
+
+
+-------------Findings--------------------------------------------
+
+The Round Robin policy with VM Scaling and low scheduling interval like 0.5 or 1 and high
+scaling factor enables the best output, next Random policy with VM scaling enables second best
+and the worst was produced by First host selection in all combinations.
+
+*Simple datacenter*
+
+In the hw3_simple simulation, we create a simple datacenter that assigns
+tasks to Hosts based on first available policy, in this policy, the datacenter
+goes over the list of hosts each time to find the first host that can handle
+the VM request, thus assigning host their maximum capacity before moving on to the
+next one. This disables equal resource usage in the datacenter as shown in the findings below.
+Additionally, also would seriously impact VM scaling as the hosts with VM assigned would
+be used up.
+
+parameters:
+homework3_1 {
+  HOSTS = 10
+  HOST_PES = 16
+  HOST_MIPS = 1000
+  HOST_RAM = 16384 //in Megabytes
+  HOST_BW = 16384 //in Megabits/s
+  HOST_STORAGE = 1000000
+
+  VMS = 6
+  VM_PES = 4
+  VM_MIPS = 1000
+  VM_RAM = 2048
+  VM_BW = 2048
+  VM_SIZE = 10000
+  VM_SCALING_FACTOR = 0.5 // scaling enabled by 10%
+  VM_SCALING_LOWER_THRESHOLD = 0.35 // If less than 40% of the CPU is used
+  VM_SCALING_UPPER_THRESHOLD = 0.8 // If more than 90% of the CPU is used
+
+  CLOUDLETS = 12
+  CLOUDLET_PES = 2
+  CLOUDLET_LENGTH = 1000
+  CLOUDLET_SIZE = 512
+
+  CLOUDLET_DYNAMIC_USAGE = 0.1
+
+  INTERVAL = 0.5
+}
+
+result:
+                                               SIMULATION RESULTS
+|Cloudlet|Status |DC|Host|Host PEs |VM|VM PEs   |CloudletLen|FinishedLen|CloudletPEs|StartTime|FinishTime|ExecTime
+|--------|-------|--|----|---------|--|---------|-----------|-----------|-----------|---------|----------|--------
+|      ID|       |ID|  ID|CPU cores|ID|CPU cores|         MI|         MI|  CPU cores|  Seconds|   Seconds| Seconds
+|       0|SUCCESS| 1|   0|       16| 0|        4|       1000|       1000|          2|        0|         1|       1
+|       6|SUCCESS| 1|   0|       16| 0|        4|       1000|       1000|          2|        0|         1|       1
+|       1|SUCCESS| 1|   0|       16| 1|        4|       1000|       1000|          2|        0|         1|       1
+|       7|SUCCESS| 1|   0|       16| 1|        4|       1000|       1000|          2|        0|         1|       1
+|       2|SUCCESS| 1|   0|       16| 2|        4|       1000|       1000|          2|        0|         1|       1
+|       8|SUCCESS| 1|   0|       16| 2|        4|       1000|       1000|          2|        0|         1|       1
+|       3|SUCCESS| 1|   0|       16| 3|        4|       1000|       1000|          2|        0|         1|       1
+|       9|SUCCESS| 1|   0|       16| 3|        4|       1000|       1000|          2|        0|         1|       1
+|       4|SUCCESS| 1|   1|       16| 4|        4|       1000|       1000|          2|        0|         1|       1
+|      10|SUCCESS| 1|   1|       16| 4|        4|       1000|       1000|          2|        0|         1|       1
+|       5|SUCCESS| 1|   1|       16| 5|        4|       1000|       1000|          2|        0|         1|       1
+|      11|SUCCESS| 1|   1|       16| 5|        4|       1000|       1000|          2|        0|         1|       1
+
+
+as we can see, all the 6 VMs were assigned to just the first 2 hosts and the first host has
+full PE usage, now lets try queueing the cloudlets as we are using the space shared policy,
+this policy enables queueing the cloudlets and disabling sharing
+the resources (PEs)
+
+homework3_1 {
+  HOSTS = 10
+  HOST_PES = 16
+  HOST_MIPS = 1000
+  HOST_RAM = 16384 //in Megabytes
+  HOST_BW = 16384 //in Megabits/s
+  HOST_STORAGE = 1000000
+
+  VMS = 1
+  VM_PES = 4
+  VM_MIPS = 1000
+  VM_RAM = 2048
+  VM_BW = 2048
+  VM_SIZE = 10000
+  VM_SCALING_FACTOR = 0.5 // scaling enabled by 10%
+  VM_SCALING_LOWER_THRESHOLD = 0.35 // If less than 40% of the CPU is used
+  VM_SCALING_UPPER_THRESHOLD = 0.8 // If more than 90% of the CPU is used
+
+  CLOUDLETS = 4
+  CLOUDLET_PES = 2
+  CLOUDLET_LENGTH = 1000
+  CLOUDLET_SIZE = 512
+
+  CLOUDLET_DYNAMIC_USAGE = 0.1
+
+  INTERVAL = 0.5
+}
+
+                                               SIMULATION RESULTS
+|Cloudlet|Status |DC|Host|Host PEs |VM|VM PEs   |CloudletLen|FinishedLen|CloudletPEs|StartTime|FinishTime|ExecTime
+|--------|-------|--|----|---------|--|---------|-----------|-----------|-----------|---------|----------|--------
+|      ID|       |ID|  ID|CPU cores|ID|CPU cores|         MI|         MI|  CPU cores|  Seconds|   Seconds| Seconds
+|       0|SUCCESS| 1|   0|       16| 0|        4|       1000|       1000|          2|        0|         1|       1
+|       1|SUCCESS| 1|   0|       16| 0|        4|       1000|       1000|          2|        0|         1|       1
+|       2|SUCCESS| 1|   0|       16| 0|        4|       1000|       1000|          2|        1|         2|       1
+|       3|SUCCESS| 1|   0|       16| 0|        4|       1000|       1000|          2|        1|         2|       1
+
+as you can see, first 2 cloudlets were processed first and then the next 2.
+If we enable sharing of resources (PEs), we can see that each cloudlet will be
+processed first but would increase their execution time. (please refer to the code to change this policy)
+
+homework3_1 {
+  HOSTS = 10
+  HOST_PES = 16
+  HOST_MIPS = 1000
+  HOST_RAM = 16384 //in Megabytes
+  HOST_BW = 16384 //in Megabits/s
+  HOST_STORAGE = 1000000
+
+  VMS = 1
+  VM_PES = 4
+  VM_MIPS = 1000
+  VM_RAM = 2048
+  VM_BW = 2048
+  VM_SIZE = 10000
+  VM_SCALING_FACTOR = 0.5 // scaling enabled by 10%
+  VM_SCALING_LOWER_THRESHOLD = 0.35 // If less than 40% of the CPU is used
+  VM_SCALING_UPPER_THRESHOLD = 0.8 // If more than 90% of the CPU is used
+
+  CLOUDLETS = 4
+  CLOUDLET_PES = 2
+  CLOUDLET_LENGTH = 1000
+  CLOUDLET_SIZE = 512
+
+  CLOUDLET_DYNAMIC_USAGE = 0.1
+
+  INTERVAL = 0.5
+}
+
+                                               SIMULATION RESULTS
+|Cloudlet|Status |DC|Host|Host PEs |VM|VM PEs   |CloudletLen|FinishedLen|CloudletPEs|StartTime|FinishTime|ExecTime
+|--------|-------|--|----|---------|--|---------|-----------|-----------|-----------|---------|----------|--------
+|      ID|       |ID|  ID|CPU cores|ID|CPU cores|         MI|         MI|  CPU cores|  Seconds|   Seconds| Seconds
+|       0|SUCCESS| 1|   0|       16| 0|        4|       1000|       1000|          2|        0|         2|       2
+|       1|SUCCESS| 1|   0|       16| 0|        4|       1000|       1000|          2|        0|         2|       2
+|       2|SUCCESS| 1|   0|       16| 0|        4|       1000|       1000|          2|        0|         2|       2
+|       3|SUCCESS| 1|   0|       16| 0|        4|       1000|       1000|          2|        0|         2|       2
+
+Thus, each cloudlet shared the PEs with other cloudlets and this increased their individual time by 2 seconds, but
+they all started at the same time. This would also yield desired results but depends on other available resources
+like the RAM and bandwidth, thus sharing resources can also increase the overall time as each cloudlet might not
+have an equal share or any of some resource and thus take longer to execute, other cloudlet finishing will free
+the resource for this execution. It might be a better option if each VM doesnt use its full capacity of
+PEs assigned, this can be tested by decreasing VM_MIPS by half.
+
+
+-------------------------------------------------------------------------------------------------------------
+
+Now to achieve equality among the hosts and equal resource usage lets explore the Round robin policy,
+this policy assigns VMs to hosts in a circular fashion and thus achieving fairly equal VM allocation and
+resource utilization assuming all VMs use the same amount of resources.
+
+choose the hw3_Round_Robin option to run this
+
+homework3_2 {
+  HOSTS = 10
+  HOST_PES = 16
+  HOST_MIPS = 1000
+  HOST_RAM = 16384 //in Megabytes
+  HOST_BW = 16384 //in Megabits/s
+  HOST_STORAGE = 1000000
+
+  VMS = 6
+  VM_PES = 4
+  VM_MIPS = 1000
+  VM_RAM = 2048
+  VM_BW = 2048
+  VM_SIZE = 10000
+  VM_SCALING_FACTOR = 0.5 // scaling enabled by 10%
+  VM_SCALING_LOWER_THRESHOLD = 0.35 // If less than 40% of the CPU is used
+  VM_SCALING_UPPER_THRESHOLD = 0.8 // If more than 90% of the CPU is used
+
+  CLOUDLETS = 12
+  CLOUDLET_PES = 2
+  CLOUDLET_LENGTH = 1000
+  CLOUDLET_SIZE = 512
+
+  CLOUDLET_DYNAMIC_USAGE = 0.1
+
+  INTERVAL = 0.5
+}
+
+                                               SIMULATION RESULTS
+|Cloudlet|Status |DC|Host|Host PEs |VM|VM PEs   |CloudletLen|FinishedLen|CloudletPEs|StartTime|FinishTime|ExecTime
+|--------|-------|--|----|---------|--|---------|-----------|-----------|-----------|---------|----------|--------
+|      ID|       |ID|  ID|CPU cores|ID|CPU cores|         MI|         MI|  CPU cores|  Seconds|   Seconds| Seconds
+|       0|SUCCESS| 1|   0|       16| 0|        4|       1000|       1000|          2|        0|         1|       1
+|       6|SUCCESS| 1|   0|       16| 0|        4|       1000|       1000|          2|        0|         1|       1
+|       1|SUCCESS| 1|   1|       16| 1|        4|       1000|       1000|          2|        0|         1|       1
+|       7|SUCCESS| 1|   1|       16| 1|        4|       1000|       1000|          2|        0|         1|       1
+|       2|SUCCESS| 1|   2|       16| 2|        4|       1000|       1000|          2|        0|         1|       1
+|       8|SUCCESS| 1|   2|       16| 2|        4|       1000|       1000|          2|        0|         1|       1
+|       3|SUCCESS| 1|   3|       16| 3|        4|       1000|       1000|          2|        0|         1|       1
+|       9|SUCCESS| 1|   3|       16| 3|        4|       1000|       1000|          2|        0|         1|       1
+|       4|SUCCESS| 1|   4|       16| 4|        4|       1000|       1000|          2|        0|         1|       1
+|      10|SUCCESS| 1|   4|       16| 4|        4|       1000|       1000|          2|        0|         1|       1
+|       5|SUCCESS| 1|   5|       16| 5|        4|       1000|       1000|          2|        0|         1|       1
+|      11|SUCCESS| 1|   5|       16| 5|        4|       1000|       1000|          2|        0|         1|       1
+
+As you can see here, hosts unlike the random assignment have fair distribution of VMs and the first 6 hosts are used
+as there are 6 VMs. This benefits when VMs are to scale and use more PEs as then the hosts would have the PEs available
+to assign.
+
+if we use random assignment it would yield similar results but instead assign VMs to random hosts, use the hw3_random_allocation option while running
+
+                                               SIMULATION RESULTS
+|Cloudlet|Status |DC|Host|Host PEs |VM|VM PEs   |CloudletLen|FinishedLen|CloudletPEs|StartTime|FinishTime|ExecTime
+|--------|-------|--|----|---------|--|---------|-----------|-----------|-----------|---------|----------|--------
+|      ID|       |ID|  ID|CPU cores|ID|CPU cores|         MI|         MI|  CPU cores|  Seconds|   Seconds| Seconds
+|       4|SUCCESS| 1|   0|       16| 4|        4|       1000|       1000|          2|        0|         1|       1
+|      10|SUCCESS| 1|   0|       16| 4|        4|       1000|       1000|          2|        0|         1|       1
+|       3|SUCCESS| 1|   1|       16| 3|        4|       1000|       1000|          2|        0|         1|       1
+|       9|SUCCESS| 1|   1|       16| 3|        4|       1000|       1000|          2|        0|         1|       1
+|       1|SUCCESS| 1|   4|       16| 1|        4|       1000|       1000|          2|        0|         1|       1
+|       7|SUCCESS| 1|   4|       16| 1|        4|       1000|       1000|          2|        0|         1|       1
+|       2|SUCCESS| 1|   5|       16| 2|        4|       1000|       1000|          2|        0|         1|       1
+|       8|SUCCESS| 1|   5|       16| 2|        4|       1000|       1000|          2|        0|         1|       1
+|       5|SUCCESS| 1|   6|       16| 5|        4|       1000|       1000|          2|        0|         1|       1
+|      11|SUCCESS| 1|   6|       16| 5|        4|       1000|       1000|          2|        0|         1|       1
+|       0|SUCCESS| 1|   8|       16| 0|        4|       1000|       1000|          2|        0|         1|       1
+|       6|SUCCESS| 1|   8|       16| 0|        4|       1000|       1000|          2|        0|         1|       1
+
+
+
+if we use more more VMs and cloudlets
+
+homework3_3 {
+  HOSTS = 6
+  HOST_PES = 16
+  HOST_MIPS = 1000
+  HOST_RAM = 16384 //in Megabytes
+  HOST_BW = 16384 //in Megabits/s
+  HOST_STORAGE = 1000000
+
+  VMS = 10
+  VM_PES = 4
+  VM_MIPS = 1000
+  VM_RAM = 2048
+  VM_BW = 2048
+  VM_SIZE = 10000
+  VM_SCALING_FACTOR = 0.5 // scaling enabled by 10%
+  VM_SCALING_LOWER_THRESHOLD = 0.35 // If less than 40% of the CPU is used
+  VM_SCALING_UPPER_THRESHOLD = 0.8 // If more than 90% of the CPU is used
+
+  CLOUDLETS = 20
+  CLOUDLET_PES = 2
+  CLOUDLET_LENGTH = 1000
+  CLOUDLET_SIZE = 512
+
+  CLOUDLET_DYNAMIC_USAGE = 0.1
+
+  INTERVAL = 0.5
+}
+
+                                               SIMULATION RESULTS
+|Cloudlet|Status |DC|Host|Host PEs |VM|VM PEs   |CloudletLen|FinishedLen|CloudletPEs|StartTime|FinishTime|ExecTime
+|--------|-------|--|----|---------|--|---------|-----------|-----------|-----------|---------|----------|--------
+|      ID|       |ID|  ID|CPU cores|ID|CPU cores|         MI|         MI|  CPU cores|  Seconds|   Seconds| Seconds
+|       5|SUCCESS| 1|   0|       16| 5|        4|       1000|       1000|          2|        0|         1|       1
+|      15|SUCCESS| 1|   0|       16| 5|        4|       1000|       1000|          2|        0|         1|       1
+|       6|SUCCESS| 1|   0|       16| 6|        4|       1000|       1000|          2|        0|         1|       1
+|      16|SUCCESS| 1|   0|       16| 6|        4|       1000|       1000|          2|        0|         1|       1
+|       0|SUCCESS| 1|   1|       16| 0|        4|       1000|       1000|          2|        0|         1|       1
+|      10|SUCCESS| 1|   1|       16| 0|        4|       1000|       1000|          2|        0|         1|       1
+|       1|SUCCESS| 1|   1|       16| 1|        4|       1000|       1000|          2|        0|         1|       1
+|      11|SUCCESS| 1|   1|       16| 1|        4|       1000|       1000|          2|        0|         1|       1
+|       2|SUCCESS| 1|   1|       16| 2|        4|       1000|       1000|          2|        0|         1|       1
+|      12|SUCCESS| 1|   1|       16| 2|        4|       1000|       1000|          2|        0|         1|       1
+|       8|SUCCESS| 1|   1|       16| 8|        4|       1000|       1000|          2|        0|         1|       1
+|      18|SUCCESS| 1|   1|       16| 8|        4|       1000|       1000|          2|        0|         1|       1
+|       3|SUCCESS| 1|   2|       16| 3|        4|       1000|       1000|          2|        0|         1|       1
+|      13|SUCCESS| 1|   2|       16| 3|        4|       1000|       1000|          2|        0|         1|       1
+|       7|SUCCESS| 1|   3|       16| 7|        4|       1000|       1000|          2|        0|         1|       1
+|      17|SUCCESS| 1|   3|       16| 7|        4|       1000|       1000|          2|        0|         1|       1
+|       9|SUCCESS| 1|   3|       16| 9|        4|       1000|       1000|          2|        0|         1|       1
+|      19|SUCCESS| 1|   3|       16| 9|        4|       1000|       1000|          2|        0|         1|       1
+|       4|SUCCESS| 1|   4|       16| 4|        4|       1000|       1000|          2|        0|         1|       1
+|      14|SUCCESS| 1|   4|       16| 4|        4|       1000|       1000|          2|        0|         1|       1
+
+for round robin:
+homework3_2 {
+  HOSTS = 8
+  HOST_PES = 16
+  HOST_MIPS = 1000
+  HOST_RAM = 16384 //in Megabytes
+  HOST_BW = 16384 //in Megabits/s
+  HOST_STORAGE = 1000000
+
+  VMS = 10
+  VM_PES = 4
+  VM_MIPS = 1000
+  VM_RAM = 2048
+  VM_BW = 2048
+  VM_SIZE = 10000
+  VM_SCALING_FACTOR = 0.5 // scaling enabled by 10%
+  VM_SCALING_LOWER_THRESHOLD = 0.35 // If less than 40% of the CPU is used
+  VM_SCALING_UPPER_THRESHOLD = 0.8 // If more than 90% of the CPU is used
+
+  CLOUDLETS = 20
+  CLOUDLET_PES = 2
+  CLOUDLET_LENGTH = 1000
+  CLOUDLET_SIZE = 512
+
+  CLOUDLET_DYNAMIC_USAGE = 0.1
+
+  INTERVAL = 0.5
+}
+
+                                               SIMULATION RESULTS
+|Cloudlet|Status |DC|Host|Host PEs |VM|VM PEs   |CloudletLen|FinishedLen|CloudletPEs|StartTime|FinishTime|ExecTime
+|--------|-------|--|----|---------|--|---------|-----------|-----------|-----------|---------|----------|--------
+|      ID|       |ID|  ID|CPU cores|ID|CPU cores|         MI|         MI|  CPU cores|  Seconds|   Seconds| Seconds
+|       7|SUCCESS| 1|   0|       16| 7|        4|       1000|       1000|          2|        0|         1|       1
+|      17|SUCCESS| 1|   0|       16| 7|        4|       1000|       1000|          2|        0|         1|       1
+|       3|SUCCESS| 1|   1|       16| 3|        4|       1000|       1000|          2|        0|         1|       1
+|      13|SUCCESS| 1|   1|       16| 3|        4|       1000|       1000|          2|        0|         1|       1
+|       1|SUCCESS| 1|   2|       16| 1|        4|       1000|       1000|          2|        0|         1|       1
+|      11|SUCCESS| 1|   2|       16| 1|        4|       1000|       1000|          2|        0|         1|       1
+|       8|SUCCESS| 1|   2|       16| 8|        4|       1000|       1000|          2|        0|         1|       1
+|      18|SUCCESS| 1|   2|       16| 8|        4|       1000|       1000|          2|        0|         1|       1
+|       9|SUCCESS| 1|   2|       16| 9|        4|       1000|       1000|          2|        0|         1|       1
+|      19|SUCCESS| 1|   2|       16| 9|        4|       1000|       1000|          2|        0|         1|       1
+|       2|SUCCESS| 1|   3|       16| 2|        4|       1000|       1000|          2|        0|         1|       1
+|      12|SUCCESS| 1|   3|       16| 2|        4|       1000|       1000|          2|        0|         1|       1
+|       4|SUCCESS| 1|   3|       16| 4|        4|       1000|       1000|          2|        0|         1|       1
+|      14|SUCCESS| 1|   3|       16| 4|        4|       1000|       1000|          2|        0|         1|       1
+|       6|SUCCESS| 1|   3|       16| 6|        4|       1000|       1000|          2|        0|         1|       1
+|      16|SUCCESS| 1|   3|       16| 6|        4|       1000|       1000|          2|        0|         1|       1
+|       0|SUCCESS| 1|   4|       16| 0|        4|       1000|       1000|          2|        0|         1|       1
+|      10|SUCCESS| 1|   4|       16| 0|        4|       1000|       1000|          2|        0|         1|       1
+|       5|SUCCESS| 1|   4|       16| 5|        4|       1000|       1000|          2|        0|         1|       1
+|      15|SUCCESS| 1|   4|       16| 5|        4|       1000|       1000|          2|        0|         1|       1
+
+
+Thus, the random assignment depends on the random number generator to achieve a random number of host and an inefficient
+generation will yield worse results.
+
+
+
+------------------------------------------------------------------------------------------------------------------------
+
+Lets take a look at autoscaling and how it impacts the execution
+please refer to the code to enable autoscaling
+
+we can create vms and cloudlets and use the space shared policy to disable sharing
+and create a queue of cloudlets
+
+homework3_2 {
+  HOSTS = 5
+  HOST_PES = 16
+  HOST_MIPS = 1000
+  HOST_RAM = 16384 //in Megabytes
+  HOST_BW = 16384 //in Megabits/s
+  HOST_STORAGE = 1000000
+
+  VMS = 2
+  VM_PES = 4
+  VM_MIPS = 1000
+  VM_RAM = 2048
+  VM_BW = 2048
+  VM_SIZE = 10000
+  VM_SCALING_FACTOR = 0.5 // scaling enabled by 10%
+  VM_SCALING_LOWER_THRESHOLD = 0.35 // If less than 40% of the CPU is used
+  VM_SCALING_UPPER_THRESHOLD = 0.8 // If more than 90% of the CPU is used
+
+  CLOUDLETS = 16
+  CLOUDLET_PES = 2
+  CLOUDLET_LENGTH = 1000
+  CLOUDLET_SIZE = 512
+
+  CLOUDLET_DYNAMIC_USAGE = 0.1
+
+  INTERVAL = 0.5
+}
+
+                                               SIMULATION RESULTS
+|Cloudlet|Status |DC|Host|Host PEs |VM|VM PEs   |CloudletLen|FinishedLen|CloudletPEs|StartTime|FinishTime|ExecTim
+|--------|-------|--|----|---------|--|---------|-----------|-----------|-----------|---------|----------|-------
+|      ID|       |ID|  ID|CPU cores|ID|CPU cores|         MI|         MI|  CPU cores|  Seconds|   Seconds| Second
+|       0|SUCCESS| 1|   0|       16| 0|        4|       1000|       1000|          2|        0|         1|
+|       2|SUCCESS| 1|   0|       16| 0|        4|       1000|       1000|          2|        0|         1|
+|       1|SUCCESS| 1|   1|       16| 1|        4|       1000|       1000|          2|        0|         1|
+|       3|SUCCESS| 1|   1|       16| 1|        4|       1000|       1000|          2|        0|         1|
+|       4|SUCCESS| 1|   0|       16| 0|        4|       1000|       1000|          2|        1|         2|
+|       6|SUCCESS| 1|   0|       16| 0|        4|       1000|       1000|          2|        1|         2|
+|       5|SUCCESS| 1|   1|       16| 1|        4|       1000|       1000|          2|        1|         2|
+|       7|SUCCESS| 1|   1|       16| 1|        4|       1000|       1000|          2|        1|         2|
+|       8|SUCCESS| 1|   0|       16| 0|        4|       1000|       1000|          2|        2|         3|
+|      10|SUCCESS| 1|   0|       16| 0|        4|       1000|       1000|          2|        2|         3|
+|       9|SUCCESS| 1|   1|       16| 1|        4|       1000|       1000|          2|        2|         3|
+|      11|SUCCESS| 1|   1|       16| 1|        4|       1000|       1000|          2|        2|         3|
+|      12|SUCCESS| 1|   0|       16| 0|        4|       1000|       1000|          2|        4|         4|
+|      14|SUCCESS| 1|   0|       16| 0|        4|       1000|       1000|          2|        4|         4|
+|      13|SUCCESS| 1|   1|       16| 1|        4|       1000|       1000|          2|        4|         4|
+|      15|SUCCESS| 1|   1|       16| 1|        4|       1000|       1000|          2|        4|         4|
+
+
+
+thus, this creates a queue and each VM cannot increase the number of PEs to yield faster results, lets enable VM scaling
+with an interaval of 0.5
+
+using same parameters as before
+
+                                               SIMULATION RESULTS
+|Cloudlet|Status |DC|Host|Host PEs |VM|VM PEs   |CloudletLen|FinishedLen|CloudletPEs|StartTime|FinishTime|ExecTim
+|--------|-------|--|----|---------|--|---------|-----------|-----------|-----------|---------|----------|-------
+|      ID|       |ID|  ID|CPU cores|ID|CPU cores|         MI|         MI|  CPU cores|  Seconds|   Seconds| Second
+|       0|SUCCESS| 1|   0|       16| 0|       16|       1000|       1000|          2|        0|         1|
+|       2|SUCCESS| 1|   0|       16| 0|       16|       1000|       1000|          2|        0|         1|
+|       1|SUCCESS| 1|   1|       16| 1|       16|       1000|       1000|          2|        0|         1|
+|       3|SUCCESS| 1|   1|       16| 1|       16|       1000|       1000|          2|        0|         1|
+|       4|SUCCESS| 1|   0|       16| 0|       16|       1000|       1000|          2|        1|         2|
+|       5|SUCCESS| 1|   1|       16| 1|       16|       1000|       1000|          2|        1|         2|
+|       6|SUCCESS| 1|   0|       16| 0|       16|       1000|       1000|          2|        1|         2|
+|       8|SUCCESS| 1|   0|       16| 0|       16|       1000|       1000|          2|        1|         2|
+|       7|SUCCESS| 1|   1|       16| 1|       16|       1000|       1000|          2|        1|         2|
+|       9|SUCCESS| 1|   1|       16| 1|       16|       1000|       1000|          2|        1|         2|
+|      10|SUCCESS| 1|   0|       16| 0|       16|       1000|       1000|          2|        2|         2|
+|      11|SUCCESS| 1|   1|       16| 1|       16|       1000|       1000|          2|        2|         2|
+|      12|SUCCESS| 1|   0|       16| 0|       16|       1000|       1000|          2|        2|         3|
+|      14|SUCCESS| 1|   0|       16| 0|       16|       1000|       1000|          2|        2|         3|
+|      13|SUCCESS| 1|   1|       16| 1|       16|       1000|       1000|          2|        2|         3|
+|      15|SUCCESS| 1|   1|       16| 1|       16|       1000|       1000|          2|        2|         3|
+
+due to scaling, the execution takes less time now.
+
+-----------------------------------------------------------------------------------------------
+Lets explore several other simulation to support the findings
+
+*space shared + autosacling and space shared + noautoscaling difference*
+
+homework3_2 {
+  HOSTS = 15000
+  HOST_PES = 16
+  HOST_MIPS = 1000
+  HOST_RAM = 16384 //in Megabytes
+  HOST_BW = 16384 //in Megabits/s
+  HOST_STORAGE = 1000000
+
+  VMS = 10000
+  VM_PES = 2
+  VM_MIPS = 500
+  VM_RAM = 2048
+  VM_BW = 2048
+  VM_SIZE = 10000
+  VM_SCALING_FACTOR = 0.5 // scaling enabled by 10%
+  VM_SCALING_LOWER_THRESHOLD = 0.35 // If less than 40% of the CPU is used
+  VM_SCALING_UPPER_THRESHOLD = 0.8 // If more than 90% of the CPU is used
+
+  CLOUDLETS = 18000
+  CLOUDLET_PES = 2
+  CLOUDLET_LENGTH = 15000
+  CLOUDLET_SIZE = 512
+
+  CLOUDLET_DYNAMIC_USAGE = 0.1
+
+  INTERVAL = 0.5
+}
+
+
+truncated shared + autosacling, takes a total of 31 seconds and VM scaled to 12 PEs:
+|   17988|SUCCESS| 1|7988|       16|7988|       12|      15000|      15000|          2|        2|        31|      30
+|   17989|SUCCESS| 1|7989|       16|7989|       12|      15000|      15000|          2|        2|        31|      30
+|   17990|SUCCESS| 1|7990|       16|7990|       12|      15000|      15000|          2|        2|        31|      30
+|   17991|SUCCESS| 1|7991|       16|7991|       12|      15000|      15000|          2|        2|        31|      30
+|   17992|SUCCESS| 1|7992|       16|7992|       12|      15000|      15000|          2|        2|        31|      30
+|   17993|SUCCESS| 1|7993|       16|7993|       12|      15000|      15000|          2|        2|        31|      30
+|   17994|SUCCESS| 1|7994|       16|7994|       12|      15000|      15000|          2|        2|        31|      30
+|   17995|SUCCESS| 1|7995|       16|7995|       12|      15000|      15000|          2|        2|        31|      30
+|   17996|SUCCESS| 1|7996|       16|7996|       12|      15000|      15000|          2|        2|        31|      30
+|   17997|SUCCESS| 1|7997|       16|7997|       12|      15000|      15000|          2|        2|        31|      30
+|   17998|SUCCESS| 1|7998|       16|7998|       12|      15000|      15000|          2|        2|        31|      30
+|   17999|SUCCESS| 1|7999|       16|7999|       12|      15000|      15000|          2|        2|        31|      30
+
+truncated shared + noautoscaling takes a total of 60 seconds:
+|   17988|SUCCESS| 1|7988|       16|7988|        2|      15000|      15000|          2|       30|        60|      30
+|   17989|SUCCESS| 1|7989|       16|7989|        2|      15000|      15000|          2|       30|        60|      30
+|   17990|SUCCESS| 1|7990|       16|7990|        2|      15000|      15000|          2|       30|        60|      30
+|   17991|SUCCESS| 1|7991|       16|7991|        2|      15000|      15000|          2|       30|        60|      30
+|   17992|SUCCESS| 1|7992|       16|7992|        2|      15000|      15000|          2|       30|        60|      30
+|   17993|SUCCESS| 1|7993|       16|7993|        2|      15000|      15000|          2|       30|        60|      30
+|   17994|SUCCESS| 1|7994|       16|7994|        2|      15000|      15000|          2|       30|        60|      30
+|   17995|SUCCESS| 1|7995|       16|7995|        2|      15000|      15000|          2|       30|        60|      30
+|   17996|SUCCESS| 1|7996|       16|7996|        2|      15000|      15000|          2|       30|        60|      30
+|   17997|SUCCESS| 1|7997|       16|7997|        2|      15000|      15000|          2|       30|        60|      30
+|   17998|SUCCESS| 1|7998|       16|7998|        2|      15000|      15000|          2|       30|        60|      30
+|   17999|SUCCESS| 1|7999|       16|7999|        2|      15000|      15000|          2|       30|        60|      30
+
+
+
+*interval and scaling factor difference*
+
+homework3_2 {
+  HOSTS = 15000
+  HOST_PES = 16
+  HOST_MIPS = 1000
+  HOST_RAM = 1000000 //in Megabytes
+  HOST_BW = 100000 //in Megabits/s
+  HOST_STORAGE = 1000000
+
+  VMS = 400
+  VM_PES = 2
+  VM_MIPS = 500
+  VM_RAM = 16384
+  VM_BW = 16384
+  VM_SIZE = 10000
+  VM_SCALING_FACTOR = 0.3 // scaling enabled by 10%
+  VM_SCALING_LOWER_THRESHOLD = 0.3 // If less than 40% of the CPU is used
+  VM_SCALING_UPPER_THRESHOLD = 0.8 // If more than 90% of the CPU is used
+
+  CLOUDLETS = 1200
+  CLOUDLET_PES = 2
+  CLOUDLET_LENGTH = 15000
+  CLOUDLET_SIZE = 512
+
+  CLOUDLET_DYNAMIC_USAGE = 0.05
+
+  INTERVAL = 4
+}
+
+|    1190|SUCCESS| 1| 390|       16|390|       14|      15000|      15000|          2|       16|        46|      30
+|    1191|SUCCESS| 1| 391|       16|391|       14|      15000|      15000|          2|       16|        46|      30
+|    1192|SUCCESS| 1| 392|       16|392|       14|      15000|      15000|          2|       16|        46|      30
+|    1193|SUCCESS| 1| 393|       16|393|       14|      15000|      15000|          2|       16|        46|      30
+|    1194|SUCCESS| 1| 394|       16|394|       14|      15000|      15000|          2|       16|        46|      30
+|    1195|SUCCESS| 1| 395|       16|395|       14|      15000|      15000|          2|       16|        46|      30
+|    1196|SUCCESS| 1| 396|       16|396|       14|      15000|      15000|          2|       16|        46|      30
+|    1197|SUCCESS| 1| 397|       16|397|       14|      15000|      15000|          2|       16|        46|      30
+|    1198|SUCCESS| 1| 398|       16|398|       14|      15000|      15000|          2|       16|        46|      30
+|    1199|SUCCESS| 1| 399|       16|399|       14|      15000|      15000|          2|       16|        46|      30
+
+
+decreasing scaling factor to 0.1 and increasing the interval by to 10
+
+homework3_2 {
+  HOSTS = 15000
+  HOST_PES = 16
+  HOST_MIPS = 1000
+  HOST_RAM = 1000000 //in Megabytes
+  HOST_BW = 100000 //in Megabits/s
+  HOST_STORAGE = 1000000
+
+  VMS = 400
+  VM_PES = 2
+  VM_MIPS = 500
+  VM_RAM = 16384
+  VM_BW = 16384
+  VM_SIZE = 10000
+  VM_SCALING_FACTOR = 0.1 // scaling enabled by 10%
+  VM_SCALING_LOWER_THRESHOLD = 0.3 // If less than 40% of the CPU is used
+  VM_SCALING_UPPER_THRESHOLD = 0.8 // If more than 90% of the CPU is used
+
+  CLOUDLETS = 1200
+  CLOUDLET_PES = 2
+  CLOUDLET_LENGTH = 15000
+  CLOUDLET_SIZE = 512
+
+  CLOUDLET_DYNAMIC_USAGE = 0.05
+
+  INTERVAL = 10
+}
+
+|    1186|SUCCESS| 1| 386|       16|386|       10|      15000|      15000|          2|       30|        60|      30
+|    1187|SUCCESS| 1| 387|       16|387|       10|      15000|      15000|          2|       30|        60|      30
+|    1188|SUCCESS| 1| 388|       16|388|       10|      15000|      15000|          2|       30|        60|      30
+|    1189|SUCCESS| 1| 389|       16|389|       10|      15000|      15000|          2|       30|        60|      30
+|    1190|SUCCESS| 1| 390|       16|390|       10|      15000|      15000|          2|       30|        60|      30
+|    1191|SUCCESS| 1| 391|       16|391|       10|      15000|      15000|          2|       30|        60|      30
+|    1192|SUCCESS| 1| 392|       16|392|       10|      15000|      15000|          2|       30|        60|      30
+|    1193|SUCCESS| 1| 393|       16|393|       10|      15000|      15000|          2|       30|        60|      30
+|    1194|SUCCESS| 1| 394|       16|394|       10|      15000|      15000|          2|       30|        60|      30
+|    1195|SUCCESS| 1| 395|       16|395|       10|      15000|      15000|          2|       30|        60|      30
+|    1196|SUCCESS| 1| 396|       16|396|       10|      15000|      15000|          2|       30|        60|      30
+|    1197|SUCCESS| 1| 397|       16|397|       10|      15000|      15000|          2|       30|        60|      30
+|    1198|SUCCESS| 1| 398|       16|398|       10|      15000|      15000|          2|       30|        60|      30
+|    1199|SUCCESS| 1| 399|       16|399|       10|      15000|      15000|          2|       30|        60|      30
+
+thus, a significant impact on the total execution time.
