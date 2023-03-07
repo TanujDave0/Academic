@@ -1,0 +1,45 @@
+1 trial.txt
+2
+3
+4
+5
+6
+7
+8
+2 words.txt
+3 roadmnt
+4
+5 road
+6
+5 troadmn
+6
+5 _+_+_+_+*&%$
+6
+5 jjjjjjjjjjjjjjjj
+6
+5 oadmntr
+6
+5 admntro
+6
+5 dmntroa
+6
+5 mntroad
+6
+5 ntroadm
+6
+7
+1 words.txt
+6
+7
+3 tanujdv
+4
+6
+7
+1 trial.txt
+6
+7
+3 tanujdv
+4
+6
+7
+9
